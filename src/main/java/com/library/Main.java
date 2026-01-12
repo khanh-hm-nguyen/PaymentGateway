@@ -10,16 +10,22 @@ import java.util.Scanner;
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
+    static Scanner scanner = new Scanner(System.in);
+
+
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+
         PaymentProcessor processor = null;
+
+        boolean isCheckout = true;
 
         System.out.println("=== PAYMENT GATEWAY SIMULATOR ===");
 
-        // 1. Choose Payment Method
         System.out.println("Choose payment method:");
         System.out.println("1. Credit Card");
         System.out.println("2. PayPal");
+        System.out.println("3. Checkout");
+        System.out.println("4. Exit");
         System.out.print("Select (1 or 2): ");
         int choice = scanner.nextInt();
         scanner.nextLine();
@@ -40,18 +46,22 @@ public class Main {
             System.out.println("Invalid choice. Exiting");
         }
 
-        CheckoutService service = new CheckoutService(processor);
 
-        while (true) {
-            System.out.print("\nEnter amount to pay (or 0 to exit): ");
-            double amount = scanner.nextDouble();
-
-            if (amount == 0) break;
-
-            service.checkout(amount);
+        while (isCheckout) {
+            checkoutPayment(processor);
+            isCheckout = false;
         }
 
-        System.out.println("System shutting down.");
         scanner.close();
+    }
+
+    static void checkoutPayment(PaymentProcessor processor) {
+        CheckoutService service = new CheckoutService(processor);
+
+        System.out.print("Please enter the amount to checkout: ");
+        double amount = scanner.nextDouble();
+
+        service.checkout(amount);
+
     }
 }
