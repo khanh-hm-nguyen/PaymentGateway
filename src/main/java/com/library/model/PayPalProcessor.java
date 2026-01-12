@@ -1,4 +1,4 @@
-package com.library;
+package com.library.model;
 
 public class PayPalProcessor implements PaymentProcessor {
 
@@ -12,5 +12,13 @@ public class PayPalProcessor implements PaymentProcessor {
     public void processPayment(double amount) {
         System.out.println("Connecting to PayPal account: " + emailAddress + "...");
         System.out.println("Paid $" + amount + " via PayPal.");
+    }
+
+    @Override
+    public boolean isValidated() {
+        if (emailAddress != null && emailAddress.contains("@")) {
+            return true;
+        }
+        return false;
     }
 }
