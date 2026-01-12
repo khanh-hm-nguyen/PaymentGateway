@@ -3,15 +3,21 @@ package com.library.model;
 public class PayPalProcessor implements PaymentProcessor {
 
     private String emailAddress;
+    private double balance;
 
-    public PayPalProcessor(String emailAddress) {
+    public PayPalProcessor(String emailAddress, double balance) {
         this.emailAddress = emailAddress;
+        this.balance = balance;
     }
 
     @Override
-    public void processPayment(double amount) {
-        System.out.println("Connecting to PayPal account: " + emailAddress + "...");
-        System.out.println("Paid $" + amount + " via PayPal.");
+    public boolean processPayment(double amount) {
+        if (this.balance >= amount) {
+            this.balance -= amount;
+            return true;
+        }
+
+        return false;
     }
 
     @Override
@@ -21,4 +27,5 @@ public class PayPalProcessor implements PaymentProcessor {
         }
         return false;
     }
+
 }

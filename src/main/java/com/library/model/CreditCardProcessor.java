@@ -3,15 +3,20 @@ package com.library.model;
 public class CreditCardProcessor implements PaymentProcessor {
 
     private String cardNumber;
+    private double balance;
 
-    public CreditCardProcessor(String cardNumber) {
+    public CreditCardProcessor(String cardNumber, double balance) {
         this.cardNumber = cardNumber;
+        this.balance = balance;
     }
 
     @Override
-    public void processPayment(double amount) {
-        System.out.println("Validating Card " + cardNumber + "...");
-        System.out.println("Paid $" + amount + " using Credit Card.");
+    public boolean processPayment(double amount) {
+        if (this.balance >= amount) {
+            this.balance -= amount;
+            return true;
+        }
+        return false;
     }
 
     @Override

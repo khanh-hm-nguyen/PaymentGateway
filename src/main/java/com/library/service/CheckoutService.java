@@ -11,12 +11,17 @@ public class CheckoutService {
 
     public void checkout(double amount) {
 
-        if (paymentProcessor.isValidated()) {
-            System.out.println("Initiating checkout...");
-            paymentProcessor.processPayment(amount);
-            System.out.println("Checkout complete!\n");
+        if (!paymentProcessor.isValidated()) {
+            System.out.println("Error: Invalid payment details (Card/Email invalid).");
+            return;
+        }
+
+        boolean success = paymentProcessor.processPayment(amount);
+
+        if (success) {
+            System.out.println("Payment successful! Order confirmed.");
         } else {
-            System.out.println("Error: Invalid payment details. Transaction cancelled.\n");
+            System.out.println("Error: Insufficient funds. Transaction declined.");
         }
 
     }
