@@ -1,7 +1,9 @@
 package com.library.model;
 
+import com.library.exception.InsufficientFundsException;
+
 public interface PaymentProcessor {
 
-    boolean processPayment(double amount);
+    void processPayment(double amount) throws InsufficientFundsException;
     boolean isValidated();
 }

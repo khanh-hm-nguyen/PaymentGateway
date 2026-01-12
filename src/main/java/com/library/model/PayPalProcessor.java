@@ -1,24 +1,14 @@
 package com.library.model;
 
-public class PayPalProcessor implements PaymentProcessor {
+public class PayPalProcessor extends BasePaymentProcessor {
 
     private String emailAddress;
-    private double balance;
 
     public PayPalProcessor(String emailAddress, double balance) {
+        super(balance);
         this.emailAddress = emailAddress;
-        this.balance = balance;
     }
 
-    @Override
-    public boolean processPayment(double amount) {
-        if (this.balance >= amount) {
-            this.balance -= amount;
-            return true;
-        }
-
-        return false;
-    }
 
     @Override
     public boolean isValidated() {
